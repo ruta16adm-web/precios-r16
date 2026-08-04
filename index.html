@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>R16 Mayorista - Lista de Precios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rojo: #8c1f1f;
+    --rojo-claro: #b23a2e;
+    --crudo: #f7f3ea;
+    --mostaza: #c88a1d;
+    --mostaza-claro: #f4e3c0;
+    --tinta: #241414;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--crudo);
+    color:var(--tinta);
+    font-family:'Archivo', sans-serif;
+    padding-bottom:60px;
+  }
+  header{
+    background:var(--rojo);
+    color:var(--crudo);
+    padding:22px 18px 26px;
+    position:sticky;
+    top:0;
+    z-index:10;
+    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+  }
+  .logo{
+    font-family:'Archivo Black', sans-serif;
+    font-size:28px;
+    letter-spacing:1px;
+    margin:0;
+  }
+  .subtitulo{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    opacity:0.75;
+    margin-top:4px;
+    letter-spacing:0.5px;
+  }
+  .sin-iva{
+    display:inline-block;
+    margin-top:10px;
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    border:1px solid rgba(247,243,234,0.4);
+    padding:3px 8px;
+    border-radius:3px;
+    letter-spacing:1px;
+  }
+  .buscador{
+    margin-top:14px;
+    width:100%;
+    padding:11px 14px;
+    border-radius:8px;
+    border:none;
+    font-family:'Archivo', sans-serif;
+    font-size:15px;
+    background:var(--crudo);
+    color:var(--tinta);
+  }
+  .buscador::placeholder{color:#8a8478;}
+  main{padding:22px 16px 10px;max-width:900px;margin:0 auto;}
+  .seccion{margin-bottom:34px;}
+  .seccion-titulo{
+    font-family:'Archivo Black', sans-serif;
+    font-size:17px;
+    color:var(--rojo);
+    border-bottom:3px solid var(--rojo);
+    padding-bottom:6px;
+    margin-bottom:14px;
+    letter-spacing:0.3px;
+  }
+  .seccion-titulo--efvo{
+    color:var(--mostaza);
+    border-bottom-color:var(--mostaza);
+  }
+  .lista{
+    background:#fff;
+    border:1px solid #e4ddcb;
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .fila{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    padding:12px 16px;
+    border-bottom:1px solid #ece6d8;
+  }
+  .fila:last-child{ border-bottom:none; }
+  .fila:nth-child(even){ background:#fbf9f4; }
+  .fila--destacada{
+    background:var(--mostaza-claro);
+    border-left:4px solid var(--mostaza);
+    padding-left:12px;
+  }
+  .fila-info{ min-width:0; }
+  .fila-nombre{
+    font-size:14.5px;
+    font-weight:600;
+    line-height:1.35;
+  }
+  .fila-tags{ margin-top:4px; display:flex; flex-wrap:wrap; gap:6px; }
+  .tag{
+    font-family:'Space Mono', monospace;
+    font-size:9.5px;
+    font-weight:700;
+    letter-spacing:0.3px;
+    padding:2px 6px;
+    border-radius:3px;
+    white-space:nowrap;
+  }
+  .tag--limitada{ color:#8a5a00; background:rgba(200,138,29,0.18); }
+  .tag--rotacion{ color:var(--rojo); background:rgba(140,31,31,0.1); }
+  .fila-precios{ text-align:right; flex-shrink:0; }
+  .precio-lista{
+    font-family:'Space Mono', monospace;
+    font-size:18px;
+    font-weight:700;
+    color:var(--tinta);
+    white-space:nowrap;
+  }
+  .precio-final{
+    margin-top:2px;
+    font-family:'Space Mono', monospace;
+    font-size:14px;
+    color:var(--rojo-claro);
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .precio-final-tag{
+    font-size:9px;
+    background:var(--rojo);
+    color:#fff;
+    padding:2px 5px;
+    border-radius:3px;
+    margin-right:5px;
+    letter-spacing:0.5px;
+  }
+  .seccion-titulo--efvo ~ .lista .precio-final-tag{
+    background:var(--mostaza);
+  }
+  footer{
+    text-align:center;
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    color:#8a8478;
+    margin-top:20px;
+  }
+  .vacio, .cargando{
+    text-align:center;
+    padding:40px 20px;
+    font-family:'Space Mono', monospace;
+    color:#8a8478;
+  }
+  .vacio{ display:none; }
+</style>
+</head>
+<body>
+<header>
+  <h1 class="logo">R16 MAYORISTA</h1>
+  <div class="subtitulo">Lista de precios actualizada en vivo</div>
+  <div class="sin-iva">PRECIOS SIN IVA</div>
+  <input class="buscador" id="buscador" type="text" placeholder="Buscar producto..." disabled>
+</header>
+<main id="main">
+  <div class="cargando" id="cargando">Cargando precios...</div>
+</main>
+<footer id="footer"></footer>
+
+<script>
+  const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQMN4p3KO7VgU5H6u_vOPXUjGBpm5UQGA6XTmYzPjg6H7J1eFr4MmfiYjB35gvWvXnzl6miZh33HnZ1/pub?gid=319886470&single=true&output=csv';
+
+  const ORDEN_SECCIONES = [
+    'BEBIDAS X MAYOR',
+    'MERCADERIA X MAYOR',
+    'SNACK P/ MAYOR',
+    'OFERTAS CON DESCUENTO EN EFECTIVO'
+  ];
+
+  function parsearCSV(texto) {
+    const filas = [];
+    let fila = [];
+    let campo = '';
+    let dentroComillas = false;
+    for (let i = 0; i < texto.length; i++) {
+      const c = texto[i];
+      if (dentroComillas) {
+        if (c === '"') {
+          if (texto[i + 1] === '"') { campo += '"'; i++; }
+          else { dentroComillas = false; }
+        } else {
+          campo += c;
+        }
+      } else {
+        if (c === '"') dentroComillas = true;
+        else if (c === ',') { fila.push(campo); campo = ''; }
+        else if (c === '\n') { fila.push(campo); filas.push(fila); fila = []; campo = ''; }
+        else if (c === '\r') { /* ignorar */ }
+        else campo += c;
+      }
+    }
+    if (campo.length > 0 || fila.length > 0) { fila.push(campo); filas.push(fila); }
+    return filas.filter(f => f.length > 1 || f[0] !== '');
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function formatearNum(n) {
+    if (n === '' || n === null || n === undefined || isNaN(n)) return '';
+    return Number(n).toLocaleString('es-AR');
+  }
+
+  function renderFila(p, esEfectivo) {
+    const destacadoClass = p.destacado ? ' fila--destacada' : '';
+    let etiquetas = '';
+    if (p.destacado) etiquetas += '<span class="tag tag--limitada">★ TIEMPO LIMITADO</span>';
+    if (p.stock < 0) etiquetas += '<span class="tag tag--rotacion">🔥 ALTA ROTACIÓN</span>';
+
+    let precioHtml = '<div class="precio-lista">$' + formatearNum(p.precioLista) + '</div>';
+    if (p.detalle) {
+      const label = esEfectivo ? 'EFECTIVO' : 'OFERTA';
+      precioHtml += '<div class="precio-final"><span class="precio-final-tag">' + label + '</span> $' + formatearNum(p.precioFinal) + '</div>';
+    }
+
+    return '<div class="fila' + destacadoClass + '" data-nombre="' + esc(String(p.producto).toLowerCase()) + '">' +
+      '<div class="fila-info">' +
+        '<div class="fila-nombre">' + esc(p.producto) + '</div>' +
+        (etiquetas ? '<div class="fila-tags">' + etiquetas + '</div>' : '') +
+      '</div>' +
+      '<div class="fila-precios">' + precioHtml + '</div>' +
+    '</div>';
+  }
+
+  fetch(CSV_URL)
+    .then(r => {
+      if (!r.ok) throw new Error('No se pudo cargar');
+      return r.text();
+    })
+    .then(texto => {
+      const filas = parsearCSV(texto);
+      filas.shift(); // encabezados
+
+      const grupos = {};
+      filas.forEach(row => {
+        const seccion = String(row[0] || '').trim().toUpperCase();
+        if (!seccion) return;
+        if (!grupos[seccion]) grupos[seccion] = [];
+        grupos[seccion].push({
+          producto: row[1],
+          precioLista: row[2],
+          precioFinal: row[3],
+          detalle: row[4],
+          destacado: row[5] === 'SI',
+          stock: Number(row[6]) || 0
+        });
+      });
+
+      Object.keys(grupos).forEach(sec => {
+        grupos[sec].sort((a, b) => {
+          const aNeg = a.stock < 0, bNeg = b.stock < 0;
+          if (aNeg && !bNeg) return -1;
+          if (!aNeg && bNeg) return 1;
+          if (aNeg && bNeg) return a.stock - b.stock;
+          return 0;
+        });
+      });
+
+      let html = '';
+      ORDEN_SECCIONES.forEach(sec => {
+        if (!grupos[sec] || grupos[sec].length === 0) return;
+        const esEfectivo = sec === 'OFERTAS CON DESCUENTO EN EFECTIVO';
+        html += '<section class="seccion" data-seccion="' + esc(sec) + '">';
+        html += '<h2 class="seccion-titulo' + (esEfectivo ? ' seccion-titulo--efvo' : '') + '">' + esc(sec) + '</h2>';
+        html += '<div class="lista">';
+        grupos[sec].forEach(p => { html += renderFila(p, esEfectivo); });
+        html += '</div></section>';
+      });
+
+      document.getElementById('main').innerHTML = html + '<div class="vacio" id="vacio">No se encontraron productos.</div>';
+      document.getElementById('footer').textContent = 'Actualizado: ' + new Date().toLocaleString('es-AR');
+
+      const input = document.getElementById('buscador');
+      input.disabled = false;
+      const secciones = Array.from(document.querySelectorAll('.seccion'));
+      const vacio = document.getElementById('vacio');
+      input.addEventListener('input', () => {
+        const q = input.value.toLowerCase().trim();
+        let algunaVisible = false;
+        secciones.forEach(sec => {
+          let visibles = 0;
+          sec.querySelectorAll('.fila').forEach(fila => {
+            const match = fila.getAttribute('data-nombre').includes(q);
+            fila.style.display = match ? '' : 'none';
+            if (match) visibles++;
+          });
+          sec.style.display = visibles > 0 ? '' : 'none';
+          if (visibles > 0) algunaVisible = true;
+        });
+        vacio.style.display = algunaVisible ? 'none' : 'block';
+      });
+    })
+    .catch(err => {
+      document.getElementById('main').innerHTML = '<div class="cargando">No se pudieron cargar los precios en este momento. Intentá de nuevo en unos minutos.</div>';
+    });
+</script>
+</body>
+</html>
