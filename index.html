@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>R16 Mayorista - Lista de Precios</title>
+<title>R16 Autoservicio - Lista de Precios</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -48,12 +48,20 @@
   .sin-iva{
     display:inline-block;
     margin-top:10px;
+    margin-right:6px;
     font-family:'Space Mono', monospace;
     font-size:11px;
     border:1px solid rgba(247,243,234,0.4);
     padding:3px 8px;
     border-radius:3px;
     letter-spacing:1px;
+  }
+  .aviso{
+    margin-top:8px;
+    font-family:'Space Mono', monospace;
+    font-size:10px;
+    opacity:0.65;
+    font-style:italic;
   }
   .buscador{
     margin-top:14px;
@@ -167,9 +175,11 @@
 </head>
 <body>
 <header>
-  <h1 class="logo">R16 MAYORISTA</h1>
+  <h1 class="logo">R16 AUTOSERVICIO</h1>
   <div class="subtitulo">Lista de precios actualizada en vivo</div>
   <div class="sin-iva">PRECIOS SIN IVA</div>
+  <div class="sin-iva">PRECIOS CONTADO EFECTIVO</div>
+  <div class="aviso">Precio sujeto a modificación. Stock a confirmar en sucursal.</div>
   <input class="buscador" id="buscador" type="text" placeholder="Buscar producto..." disabled>
 </header>
 <main id="main">
@@ -231,7 +241,7 @@
     let precioHtml = '<div class="precio-lista">$' + formatearNum(p.precioLista) + '</div>';
     if (p.detalle) {
       const label = esEfectivo ? 'EFECTIVO' : 'OFERTA';
-      precioHtml += '<div class="precio-final"><span class="precio-final-tag">' + label + '</span> $' + formatearNum(p.precioFinal) + '</div>';
+      precioHtml += '<div class="precio-final"><span class="precio-final-tag">' + label + '</span>' + esc(p.detalle) + '</div>';
     }
 
     return '<div class="fila' + destacadoClass + '" data-nombre="' + esc(String(p.producto).toLowerCase()) + '">' +
@@ -272,8 +282,8 @@
           const aNeg = a.stock < 0, bNeg = b.stock < 0;
           if (aNeg && !bNeg) return -1;
           if (!aNeg && bNeg) return 1;
-          if (aNeg && bNeg) return a.stock - b.stock;
-          return 0;
+          if (aNeg && bNeg && a.stock !== b.stock) return a.stock - b.stock;
+          return String(a.producto).localeCompare(String(b.producto), 'es', { sensitivity: 'base' });
         });
       });
 
