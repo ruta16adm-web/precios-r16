@@ -10,13 +10,11 @@
   :root{
     --rojo: #a3241f;
     --rojo-2: #7a1a17;
-    --rojo-claro: #d34a3a;
     --crudo: #f7f3ea;
     --crudo-2: #fffdf8;
     --mostaza: #d99a1f;
     --mostaza-claro: #f7e6bd;
     --tinta: #241414;
-    --verde-ok: #1f7a4d;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -33,7 +31,7 @@
   header{
     background:linear-gradient(135deg, var(--rojo) 0%, var(--rojo-2) 100%);
     color:var(--crudo-2);
-    padding:24px 18px 18px;
+    padding:22px 18px 16px;
     position:relative;
     overflow:hidden;
     box-shadow:0 4px 18px rgba(0,0,0,0.25);
@@ -47,393 +45,154 @@
     border-radius:50%;
     animation:flotar 7s ease-in-out infinite;
   }
-  header::after{
-    content:'';
-    position:absolute;
-    bottom:-80px; left:-40px;
-    width:180px; height:180px;
-    background:radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%);
-    border-radius:50%;
-    animation:flotar 9s ease-in-out infinite reverse;
-  }
   @keyframes flotar{
     0%,100%{ transform:translate(0,0); }
     50%{ transform:translate(10px,-14px); }
   }
-  .header-top{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    position:relative;
-    z-index:2;
-  }
+  .header-top{ display:flex; align-items:center; gap:12px; position:relative; z-index:2; }
   .logo-badge{
-    width:46px;height:46px;
-    background:var(--crudo-2);
-    color:var(--rojo);
-    border-radius:12px;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Archivo Black', sans-serif;
-    font-size:18px;
-    flex-shrink:0;
+    width:44px;height:44px; background:var(--crudo-2); color:var(--rojo);
+    border-radius:12px; display:flex;align-items:center;justify-content:center;
+    font-family:'Archivo Black', sans-serif; font-size:17px; flex-shrink:0;
     box-shadow:0 4px 10px rgba(0,0,0,0.25);
-    animation:aparecer 0.6s ease both;
   }
-  .logo-texto{ animation:aparecer 0.6s ease 0.1s both; }
-  .logo{
-    font-family:'Archivo Black', sans-serif;
-    font-size:23px;
-    letter-spacing:0.5px;
-    margin:0;
-    line-height:1.1;
-  }
+  .logo{ font-family:'Archivo Black', sans-serif; font-size:22px; letter-spacing:0.5px; margin:0; line-height:1.1; }
   .subtitulo{
-    font-family:'Space Mono', monospace;
-    font-size:11.5px;
-    opacity:0.8;
-    margin-top:2px;
-    letter-spacing:0.3px;
-    display:flex;
-    align-items:center;
-    gap:6px;
+    font-family:'Space Mono', monospace; font-size:11px; opacity:0.8; margin-top:2px;
+    letter-spacing:0.3px; display:flex; align-items:center; gap:6px;
   }
   .punto-vivo{
-    width:7px;height:7px;
-    background:#6fe08a;
-    border-radius:50%;
-    display:inline-block;
+    width:7px;height:7px; background:#6fe08a; border-radius:50%; display:inline-block;
     animation:pulso 1.6s ease-in-out infinite;
-    box-shadow:0 0 0 rgba(111,224,138,0.6);
   }
   @keyframes pulso{
     0%{ box-shadow:0 0 0 0 rgba(111,224,138,0.55); }
     70%{ box-shadow:0 0 0 7px rgba(111,224,138,0); }
     100%{ box-shadow:0 0 0 0 rgba(111,224,138,0); }
   }
-  .chips-fila{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:16px;
-    position:relative;
-    z-index:2;
-    animation:aparecer 0.6s ease 0.15s both;
-  }
+  .chips-fila{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; position:relative; z-index:2; }
   .chip-destacado{
-    font-family:'Archivo Black', sans-serif;
-    font-size:14px;
-    color:var(--rojo-2);
-    background:var(--crudo-2);
-    padding:7px 14px;
-    border-radius:8px;
-    letter-spacing:0.5px;
+    font-family:'Archivo Black', sans-serif; font-size:13.5px; color:var(--rojo-2);
+    background:var(--crudo-2); padding:6px 13px; border-radius:8px; letter-spacing:0.5px;
     box-shadow:0 3px 8px rgba(0,0,0,0.2);
   }
   .chip{
-    font-family:'Space Mono', monospace;
-    font-size:10.5px;
-    font-weight:700;
-    color:var(--crudo-2);
-    border:1px solid rgba(255,255,255,0.4);
-    background:rgba(255,255,255,0.08);
-    padding:6px 11px;
-    border-radius:8px;
-    letter-spacing:0.5px;
-    backdrop-filter:blur(2px);
+    font-family:'Space Mono', monospace; font-size:10px; font-weight:700; color:var(--crudo-2);
+    border:1px solid rgba(255,255,255,0.4); background:rgba(255,255,255,0.08);
+    padding:6px 11px; border-radius:8px; letter-spacing:0.5px;
   }
-  .aviso{
-    margin-top:10px;
-    font-family:'Space Mono', monospace;
-    font-size:9.5px;
-    opacity:0.7;
-    font-style:italic;
-    position:relative;
-    z-index:2;
-    animation:aparecer 0.6s ease 0.2s both;
+  .aviso{ margin-top:9px; font-family:'Space Mono', monospace; font-size:9px; opacity:0.7; font-style:italic; position:relative; z-index:2; }
+
+  .buscador-caja{ position:relative; margin-top:14px; z-index:2; }
+  .buscador{
+    width:100%; padding:12px 40px; border-radius:12px; border:none;
+    font-family:'Archivo', sans-serif; font-size:15px; background:var(--crudo-2); color:var(--tinta);
+    box-shadow:0 4px 14px rgba(0,0,0,0.2);
   }
-  @keyframes aparecer{
-    from{ opacity:0; transform:translateY(8px); }
-    to{ opacity:1; transform:translateY(0); }
+  .buscador:focus{ outline:none; box-shadow:0 4px 18px rgba(0,0,0,0.3), 0 0 0 3px rgba(255,255,255,0.35); }
+  .buscador::placeholder{ color:#a49c8b; }
+  .icono-buscar{ position:absolute; left:13px; top:50%; transform:translateY(-50%); opacity:0.55; font-size:14px; pointer-events:none; }
+  .icono-limpiar{
+    position:absolute; right:10px; top:50%; transform:translateY(-50%); background:#e4ddcb; color:var(--tinta);
+    border:none; width:22px;height:22px; border-radius:50%; font-size:12px; cursor:pointer; display:none;
+    align-items:center;justify-content:center;
   }
 
-  /* ---------- BUSCADOR ---------- */
-  .buscador-caja{
-    position:relative;
-    margin-top:16px;
-    z-index:2;
-    animation:aparecer 0.6s ease 0.25s both;
+  /* ---------- OFERTAS TRANSITORIAS (vitrina) ---------- */
+  #ofertasWrap{ display:none; padding:18px 14px 4px; max-width:920px; margin:0 auto; }
+  .vitrina-titulo{
+    display:flex; align-items:center; gap:8px; font-family:'Archivo Black', sans-serif;
+    font-size:15px; color:var(--mostaza); margin-bottom:10px; letter-spacing:0.3px;
   }
-  .buscador{
-    width:100%;
-    padding:13px 40px 13px 40px;
-    border-radius:12px;
-    border:none;
-    font-family:'Archivo', sans-serif;
-    font-size:15px;
-    background:var(--crudo-2);
-    color:var(--tinta);
-    box-shadow:0 4px 14px rgba(0,0,0,0.2);
-    transition:box-shadow 0.2s ease, transform 0.15s ease;
+  .vitrina-scroll{ display:flex; gap:12px; overflow-x:auto; padding-bottom:6px; scrollbar-width:none; }
+  .vitrina-scroll::-webkit-scrollbar{ display:none; }
+  .vitrina-card{
+    flex:0 0 auto; width:220px; background:linear-gradient(135deg, var(--mostaza-claro), #fdf6e6);
+    border:1.5px solid var(--mostaza); border-radius:14px; padding:14px; position:relative; overflow:hidden;
   }
-  .buscador:focus{
-    outline:none;
-    box-shadow:0 4px 18px rgba(0,0,0,0.3), 0 0 0 3px rgba(255,255,255,0.35);
+  .vitrina-card::before{
+    content:'OFERTA'; position:absolute; top:10px; right:-28px; background:var(--mostaza); color:#fff;
+    font-family:'Space Mono',monospace; font-size:9px; font-weight:700; padding:3px 30px;
+    transform:rotate(40deg); letter-spacing:1px;
   }
-  .buscador::placeholder{color:#a49c8b;}
-  .icono-buscar{
-    position:absolute;
-    left:13px; top:50%;
-    transform:translateY(-50%);
-    opacity:0.55;
-    font-size:15px;
-    pointer-events:none;
-  }
-  .icono-limpiar{
-    position:absolute;
-    right:10px; top:50%;
-    transform:translateY(-50%);
-    background:#e4ddcb;
-    color:var(--tinta);
-    border:none;
-    width:22px;height:22px;
-    border-radius:50%;
-    font-size:12px;
-    cursor:pointer;
-    display:none;
-    align-items:center;justify-content:center;
-    transition:background 0.15s ease, transform 0.15s ease;
-  }
-  .icono-limpiar:hover{ background:#d8cfb8; transform:translateY(-50%) scale(1.08); }
+  .vitrina-nombre{ font-weight:700; font-size:13.5px; margin-bottom:8px; padding-right:20px; line-height:1.3; }
+  .vitrina-precio{ font-family:'Space Mono',monospace; font-size:16px; font-weight:700; }
+  .vitrina-escalon{ font-family:'Space Mono',monospace; font-size:11px; color:var(--rojo-2); margin-top:4px; font-weight:700; }
 
   /* ---------- NAV DE CATEGORIAS ---------- */
   .nav-categorias{
-    position:sticky;
-    top:0;
-    z-index:20;
-    background:var(--crudo-2);
-    border-bottom:1px solid #e8e1d0;
-    box-shadow:0 3px 10px rgba(0,0,0,0.06);
-    display:flex;
-    gap:8px;
-    padding:10px 14px;
-    overflow-x:auto;
-    scrollbar-width:none;
+    position:sticky; top:0; z-index:20; background:var(--crudo-2); border-bottom:1px solid #e8e1d0;
+    box-shadow:0 3px 10px rgba(0,0,0,0.06); display:flex; gap:8px; padding:10px 14px;
+    overflow-x:auto; scrollbar-width:none;
   }
   .nav-categorias::-webkit-scrollbar{ display:none; }
   .nav-chip{
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-family:'Archivo', sans-serif;
-    font-weight:700;
-    font-size:12.5px;
-    color:var(--tinta);
-    background:#f1ecdf;
-    border:1.5px solid transparent;
-    padding:8px 13px;
-    border-radius:20px;
-    cursor:pointer;
-    white-space:nowrap;
-    transition:all 0.2s ease;
+    flex-shrink:0; display:flex; align-items:center; gap:6px; font-weight:700; font-size:12.5px;
+    color:var(--tinta); background:#f1ecdf; border:1.5px solid transparent; padding:8px 13px;
+    border-radius:20px; cursor:pointer; white-space:nowrap; transition:all 0.2s ease;
   }
-  .nav-chip:hover{ background:#e9e1cc; transform:translateY(-1px); }
-  .nav-chip.activo{
-    background:var(--rojo);
-    color:#fff;
-    border-color:var(--rojo);
-    box-shadow:0 3px 10px rgba(163,36,31,0.35);
-  }
-  .nav-chip .cant{
-    background:rgba(0,0,0,0.12);
-    border-radius:10px;
-    padding:1px 6px;
-    font-size:10px;
-  }
+  .nav-chip.activo{ background:var(--rojo); color:#fff; border-color:var(--rojo); box-shadow:0 3px 10px rgba(163,36,31,0.35); }
+  .nav-chip .cant{ background:rgba(0,0,0,0.12); border-radius:10px; padding:1px 6px; font-size:10px; }
   .nav-chip.activo .cant{ background:rgba(255,255,255,0.25); }
 
-  /* ---------- MAIN ---------- */
-  main{padding:20px 14px 10px;max-width:920px;margin:0 auto;}
-  .seccion{ margin-bottom:36px; scroll-margin-top:64px; }
-  .seccion-header{
-    display:flex;
-    align-items:baseline;
-    gap:10px;
-    border-bottom:3px solid var(--rojo);
-    padding-bottom:8px;
-    margin-bottom:16px;
-  }
-  .seccion-icono{ font-size:20px; }
-  .seccion-titulo{
-    font-family:'Archivo Black', sans-serif;
-    font-size:16.5px;
-    color:var(--rojo);
-    letter-spacing:0.3px;
-    flex:1;
-  }
-  .seccion-titulo--efvo ~ .lista .precio-final-tag,
-  .seccion-header--efvo{ border-bottom-color: var(--mostaza); }
-  .seccion-header--efvo .seccion-titulo{ color:var(--mostaza); }
-  .seccion-contador{
-    font-family:'Space Mono', monospace;
-    font-size:11px;
-    color:#a49c8b;
-  }
+  /* ---------- MAIN: TABLA ---------- */
+  main{ padding:20px 14px 10px; max-width:920px; margin:0 auto; }
+  .seccion{ margin-bottom:32px; scroll-margin-top:64px; opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
+  .seccion.visible{ opacity:1; transform:translateY(0); }
+  .seccion-header{ display:flex; align-items:baseline; gap:10px; border-bottom:3px solid var(--rojo); padding-bottom:8px; margin-bottom:10px; }
+  .seccion-icono{ font-size:18px; }
+  .seccion-titulo{ font-family:'Archivo Black', sans-serif; font-size:16px; color:var(--rojo); letter-spacing:0.3px; flex:1; }
+  .seccion-contador{ font-family:'Space Mono', monospace; font-size:11px; color:#a49c8b; }
 
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
-    gap:10px;
+  .tabla-wrap{ background:var(--crudo-2); border:1px solid #ece5d2; border-radius:12px; overflow:hidden; }
+  table{ width:100%; border-collapse:collapse; }
+  thead th{
+    text-align:left; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.5px;
+    color:#a49c8b; text-transform:uppercase; padding:9px 14px; border-bottom:1.5px solid #ece5d2;
   }
-
-  .card{
-    background:var(--crudo-2);
-    border:1px solid #ece5d2;
-    border-radius:14px;
-    padding:14px 15px;
-    position:relative;
-    overflow:hidden;
-    opacity:0;
-    transform:translateY(14px);
-    transition:opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  }
-  .card.visible{ opacity:1; transform:translateY(0); }
-  .card:hover{
-    box-shadow:0 8px 20px rgba(0,0,0,0.09);
-    border-color:#ddd3b8;
-    transform:translateY(-2px);
-  }
-  .card--destacada{
-    background:linear-gradient(135deg, var(--mostaza-claro) 0%, #fdf6e6 100%);
-    border-color:var(--mostaza);
-  }
-  .card--destacada::before{
-    content:'';
-    position:absolute;
-    top:0;left:0;right:0;
-    height:3px;
-    background:linear-gradient(90deg, var(--mostaza), #e8b84a, var(--mostaza));
-    background-size:200% 100%;
-    animation:brillo 2.2s linear infinite;
-  }
-  @keyframes brillo{
-    0%{ background-position:0% 0; }
-    100%{ background-position:200% 0; }
-  }
-
-  .card-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:10px;
-  }
-  .card-nombre{
-    font-size:14px;
-    font-weight:600;
-    line-height:1.35;
-    flex:1;
-    min-width:0;
-  }
-  .card-precios{ text-align:right; flex-shrink:0; }
-  .precio-lista{
-    font-family:'Space Mono', monospace;
-    font-size:18px;
-    font-weight:700;
-    color:var(--tinta);
-    white-space:nowrap;
-  }
-  .precio-final{
-    margin-top:3px;
-    font-family:'Space Mono', monospace;
-    font-size:12.5px;
-    color:var(--rojo-2);
-    font-weight:700;
-    white-space:nowrap;
-  }
-  .precio-final-tag{
-    font-size:8.5px;
-    background:var(--rojo);
-    color:#fff;
-    padding:2px 5px;
-    border-radius:4px;
-    margin-right:4px;
-    letter-spacing:0.5px;
-  }
-  .card-tags{ margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; }
+  thead th.col-precio{ text-align:right; }
+  tbody tr{ border-bottom:1px solid #f0ebdd; transition:background 0.12s ease; }
+  tbody tr:last-child{ border-bottom:none; }
+  tbody tr:nth-child(even){ background:#fbf9f4; }
+  tbody tr:hover{ background:var(--mostaza-claro); }
+  tbody tr.fila--destacada{ background:var(--mostaza-claro); }
+  td{ padding:10px 14px; vertical-align:middle; }
+  td.col-precio{ text-align:right; white-space:nowrap; }
+  .nombre-prod{ font-size:13.5px; font-weight:600; line-height:1.3; }
+  .fila-tags{ margin-top:4px; display:flex; flex-wrap:wrap; gap:5px; }
   .tag{
-    font-family:'Space Mono', monospace;
-    font-size:9.5px;
-    font-weight:700;
-    letter-spacing:0.3px;
-    padding:3px 7px;
-    border-radius:5px;
-    white-space:nowrap;
-    display:inline-flex;
-    align-items:center;
-    gap:3px;
+    font-family:'Space Mono', monospace; font-size:9px; font-weight:700; letter-spacing:0.2px;
+    padding:2px 6px; border-radius:4px; white-space:nowrap; display:inline-flex; align-items:center; gap:3px;
   }
   .tag--limitada{ color:#8a5a00; background:rgba(217,154,31,0.2); }
-  .tag--rotacion{ color:var(--rojo-2); background:rgba(163,36,31,0.1); animation:latido 1.8s ease-in-out infinite; }
-  @keyframes latido{
-    0%,100%{ transform:scale(1); }
-    50%{ transform:scale(1.05); }
-  }
+  .tag--rotacion{ color:var(--rojo-2); background:rgba(163,36,31,0.1); }
+  .precio-lista{ font-family:'Space Mono', monospace; font-size:15.5px; font-weight:700; color:var(--tinta); }
+  .precio-final{ margin-top:2px; font-family:'Space Mono', monospace; font-size:11.5px; color:var(--rojo-2); font-weight:700; }
+  .precio-final-tag{ font-size:8px; background:var(--rojo); color:#fff; padding:1px 4px; border-radius:3px; margin-right:3px; letter-spacing:0.4px; }
 
-  /* ---------- ESTADOS ---------- */
-  .skeleton-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:10px; }
-  .skeleton-card{
-    height:74px;
-    border-radius:14px;
-    background:linear-gradient(90deg, #ece5d2 25%, #f5f0e3 37%, #ece5d2 63%);
-    background-size:400% 100%;
-    animation:cargando-shimmer 1.4s ease infinite;
-  }
-  @keyframes cargando-shimmer{
-    0%{ background-position:100% 50%; }
-    100%{ background-position:0% 50%; }
-  }
-  .vacio, .error-carga{
-    text-align:center;
-    padding:50px 20px;
-    font-family:'Space Mono', monospace;
-    color:#a49c8b;
-    display:none;
-  }
+  .skeleton-card{ height:44px; border-radius:8px; margin-bottom:6px; background:linear-gradient(90deg, #ece5d2 25%, #f5f0e3 37%, #ece5d2 63%); background-size:400% 100%; animation:cargando-shimmer 1.4s ease infinite; }
+  @keyframes cargando-shimmer{ 0%{ background-position:100% 50%; } 100%{ background-position:0% 50%; } }
+  .vacio, .error-carga{ text-align:center; padding:50px 20px; font-family:'Space Mono', monospace; color:#a49c8b; display:none; }
   .vacio span, .error-carga span{ font-size:34px; display:block; margin-bottom:10px; }
 
-  footer{
-    text-align:center;
-    font-family:'Space Mono', monospace;
-    font-size:11px;
-    color:#a49c8b;
-    margin-top:26px;
-  }
+  footer{ text-align:center; font-family:'Space Mono', monospace; font-size:11px; color:#a49c8b; margin-top:26px; }
 
-  /* ---------- BOTON SCROLL TOP ---------- */
   .btn-arriba{
-    position:fixed;
-    bottom:20px; right:18px;
-    width:46px;height:46px;
-    border-radius:50%;
-    background:var(--rojo);
-    color:#fff;
-    border:none;
-    font-size:18px;
-    cursor:pointer;
-    box-shadow:0 6px 16px rgba(0,0,0,0.3);
-    display:flex;align-items:center;justify-content:center;
-    opacity:0;
-    transform:translateY(12px) scale(0.9);
-    pointer-events:none;
-    transition:opacity 0.25s ease, transform 0.25s ease;
-    z-index:30;
+    position:fixed; bottom:20px; right:18px; width:46px;height:46px; border-radius:50%;
+    background:var(--rojo); color:#fff; border:none; font-size:18px; cursor:pointer;
+    box-shadow:0 6px 16px rgba(0,0,0,0.3); display:flex;align-items:center;justify-content:center;
+    opacity:0; transform:translateY(12px) scale(0.9); pointer-events:none;
+    transition:opacity 0.25s ease, transform 0.25s ease; z-index:30;
   }
   .btn-arriba.mostrar{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
-  .btn-arriba:active{ transform:scale(0.92); }
 
-  @media (max-width:420px){
-    .grid{ grid-template-columns:1fr; }
-    .logo{ font-size:20px; }
+  @media (max-width:480px){
+    thead{ display:none; }
+    table, tbody, tr, td{ display:block; width:100%; }
+    tbody tr{ display:flex; justify-content:space-between; align-items:center; padding:11px 14px; gap:10px; }
+    td{ padding:0; }
+    td.col-precio{ text-align:right; flex-shrink:0; }
+    .logo{ font-size:19px; }
   }
 </style>
 </head>
@@ -441,7 +200,7 @@
 <header>
   <div class="header-top">
     <div class="logo-badge">R16</div>
-    <div class="logo-texto">
+    <div>
       <h1 class="logo">R16 AUTOSERVICIO</h1>
       <div class="subtitulo"><span class="punto-vivo"></span> Lista de precios actualizada en vivo</div>
     </div>
@@ -458,13 +217,16 @@
   </div>
 </header>
 
+<div id="ofertasWrap">
+  <div class="vitrina-titulo">🏷️ OFERTAS TRANSITORIAS</div>
+  <div class="vitrina-scroll" id="vitrinaScroll"></div>
+</div>
+
 <nav class="nav-categorias" id="navCategorias"></nav>
 
 <main id="main">
-  <div class="skeleton-grid">
-    <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
-    <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
-  </div>
+  <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
+  <div class="skeleton-card"></div><div class="skeleton-card"></div>
 </main>
 <div class="vacio" id="vacio"><span>🔎</span>No se encontraron productos.</div>
 <div class="error-carga" id="errorCarga"><span>⚠️</span>No se pudieron cargar los precios en este momento.<br>Probá de nuevo en unos minutos.</div>
@@ -474,28 +236,21 @@
 
 <script>
   const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQMN4p3KO7VgU5H6u_vOPXUjGBpm5UQGA6XTmYzPjg6H7J1eFr4MmfiYjB35gvWvXnzl6miZh33HnZ1/pub?gid=319886470&single=true&output=csv';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCsnb614ZfbL7_jzd7HfrAoSogBNaKz6_uidvdRm3mvx70bHQPNFrkrhx--Bao_V4O/exec';
 
   const SECCIONES_CONFIG = [
-    { nombre: 'BEBIDAS X MAYOR',                icono: '🥤' },
-    { nombre: 'MERCADERIA X MAYOR',             icono: '🛒' },
-    { nombre: 'SNACK P/ MAYOR',                 icono: '🍟' },
-    { nombre: 'OFERTAS CON DESCUENTO EN EFECTIVO', icono: '💵', efectivo: true }
+    { nombre: 'BEBIDAS X MAYOR',    icono: '🥤' },
+    { nombre: 'MERCADERIA X MAYOR', icono: '🛒' },
+    { nombre: 'SNACK P/ MAYOR',     icono: '🍟' }
   ];
 
   function parsearCSV(texto) {
-    const filas = [];
-    let fila = [];
-    let campo = '';
-    let dentroComillas = false;
+    const filas = []; let fila = []; let campo = ''; let dentroComillas = false;
     for (let i = 0; i < texto.length; i++) {
       const c = texto[i];
       if (dentroComillas) {
-        if (c === '"') {
-          if (texto[i + 1] === '"') { campo += '"'; i++; }
-          else { dentroComillas = false; }
-        } else {
-          campo += c;
-        }
+        if (c === '"') { if (texto[i+1] === '"') { campo += '"'; i++; } else dentroComillas = false; }
+        else campo += c;
       } else {
         if (c === '"') dentroComillas = true;
         else if (c === ',') { fila.push(campo); campo = ''; }
@@ -508,53 +263,31 @@
     return filas.filter(f => f.length > 1 || f[0] !== '');
   }
 
-  function esc(s) {
-    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function formatearNum(n) { if (n==='' || n===null || n===undefined || isNaN(n)) return ''; return Number(n).toLocaleString('es-AR'); }
+  function slug(s) { return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-'); }
 
-  function formatearNum(n) {
-    if (n === '' || n === null || n === undefined || isNaN(n)) return '';
-    return Number(n).toLocaleString('es-AR');
-  }
-
-  function slug(s) {
-    return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-');
-  }
-
-  function renderCard(p, esEfectivo) {
-    const destacadoClass = p.destacado ? ' card--destacada' : '';
+  function renderFila(p, esEfectivo) {
+    const destacadoClass = p.destacado ? ' fila--destacada' : '';
     let etiquetas = '';
     if (p.destacado) etiquetas += '<span class="tag tag--limitada">★ TIEMPO LIMITADO</span>';
     if (p.stock < 0) etiquetas += '<span class="tag tag--rotacion">🔥 ALTA ROTACIÓN</span>';
-
     let precioFinalHtml = '';
     if (p.detalle) {
       const label = esEfectivo ? 'EFECTIVO' : 'OFERTA';
       precioFinalHtml = '<div class="precio-final"><span class="precio-final-tag">' + label + '</span>' + esc(p.detalle) + '</div>';
     }
-
-    return '<div class="card' + destacadoClass + '" data-nombre="' + esc(String(p.producto).toLowerCase()) + '">' +
-      '<div class="card-top">' +
-        '<div class="card-nombre">' + esc(p.producto) + '</div>' +
-        '<div class="card-precios">' +
-          '<div class="precio-lista">$' + formatearNum(p.precioLista) + '</div>' +
-          precioFinalHtml +
-        '</div>' +
-      '</div>' +
-      (etiquetas ? '<div class="card-tags">' + etiquetas + '</div>' : '') +
-    '</div>';
+    return '<tr class="fila' + destacadoClass + '" data-nombre="' + esc(String(p.producto).toLowerCase()) + '">' +
+      '<td><div class="nombre-prod">' + esc(p.producto) + '</div>' + (etiquetas ? '<div class="fila-tags">' + etiquetas + '</div>' : '') + '</td>' +
+      '<td class="col-precio"><div class="precio-lista">$' + formatearNum(p.precioLista) + '</div>' + precioFinalHtml + '</td>' +
+    '</tr>';
   }
 
   function activarRevelado() {
     const obs = new IntersectionObserver((entradas) => {
-      entradas.forEach((entrada, i) => {
-        if (entrada.isIntersecting) {
-          setTimeout(() => entrada.target.classList.add('visible'), Math.min(i, 10) * 35);
-          obs.unobserve(entrada.target);
-        }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-    document.querySelectorAll('.card').forEach(c => obs.observe(c));
+      entradas.forEach(entrada => { if (entrada.isIntersecting) { entrada.target.classList.add('visible'); obs.unobserve(entrada.target); } });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.seccion').forEach(s => obs.observe(s));
   }
 
   function activarNavActiva() {
@@ -572,14 +305,33 @@
     secciones.forEach(s => obs.observe(s));
   }
 
-  fetch(CSV_URL)
-    .then(r => {
-      if (!r.ok) throw new Error('No se pudo cargar');
-      return r.text();
+  // ---- Ofertas transitorias (vitrina) ----
+  fetch(APPS_SCRIPT_URL + '?accion=ofertasPublicas')
+    .then(r => r.json())
+    .then(res => {
+      if (!res.ok || !res.ofertas || res.ofertas.length === 0) return;
+      const wrap = document.getElementById('ofertasWrap');
+      const cont = document.getElementById('vitrinaScroll');
+      cont.innerHTML = res.ofertas.map(o => {
+        let escalones = '';
+        if (o.cant1) escalones += '<div class="vitrina-escalon">Llevando ' + o.cant1 + ': ' + o.desc1 + '% OFF</div>';
+        if (o.cant2) escalones += '<div class="vitrina-escalon">Llevando ' + o.cant2 + ': ' + o.desc2 + '% OFF</div>';
+        return '<div class="vitrina-card">' +
+          '<div class="vitrina-nombre">' + esc(o.producto) + '</div>' +
+          '<div class="vitrina-precio">$' + formatearNum(o.precioLista) + '</div>' +
+          escalones +
+        '</div>';
+      }).join('');
+      wrap.style.display = 'block';
     })
+    .catch(() => {});
+
+  // ---- Catalogo principal ----
+  fetch(CSV_URL)
+    .then(r => { if (!r.ok) throw new Error('No se pudo cargar'); return r.text(); })
     .then(texto => {
       const filas = parsearCSV(texto);
-      filas.shift(); // encabezados
+      filas.shift();
 
       const grupos = {};
       filas.forEach(row => {
@@ -587,12 +339,8 @@
         if (!seccion) return;
         if (!grupos[seccion]) grupos[seccion] = [];
         grupos[seccion].push({
-          producto: row[1],
-          precioLista: row[2],
-          precioFinal: row[3],
-          detalle: row[4],
-          destacado: row[5] === 'SI',
-          stock: Number(row[6]) || 0
+          producto: row[1], precioLista: row[2], precioFinal: row[3], detalle: row[4],
+          destacado: row[5] === 'SI', stock: Number(row[6]) || 0
         });
       });
 
@@ -606,9 +354,7 @@
         });
       });
 
-      let navHtml = '';
-      let mainHtml = '';
-      let totalProductos = 0;
+      let navHtml = '', mainHtml = '', totalProductos = 0;
 
       SECCIONES_CONFIG.forEach(cfg => {
         const items = grupos[cfg.nombre];
@@ -617,18 +363,15 @@
         totalProductos += items.length;
 
         navHtml += '<div class="nav-chip" data-target="' + id + '" onclick="document.getElementById(\'' + id + '\').scrollIntoView({behavior:\'smooth\'})">' +
-          '<span>' + cfg.icono + '</span><span>' + esc(cfg.nombre) + '</span><span class="cant">' + items.length + '</span>' +
-        '</div>';
+          '<span>' + cfg.icono + '</span><span>' + esc(cfg.nombre) + '</span><span class="cant">' + items.length + '</span></div>';
 
-        mainHtml += '<section class="seccion" id="' + id + '" data-seccion="' + esc(cfg.nombre) + '">';
-        mainHtml += '<div class="seccion-header' + (cfg.efectivo ? ' seccion-header--efvo' : '') + '">' +
-          '<span class="seccion-icono">' + cfg.icono + '</span>' +
+        mainHtml += '<section class="seccion" id="' + id + '">';
+        mainHtml += '<div class="seccion-header"><span class="seccion-icono">' + cfg.icono + '</span>' +
           '<span class="seccion-titulo">' + esc(cfg.nombre) + '</span>' +
-          '<span class="seccion-contador">' + items.length + ' productos</span>' +
-        '</div>';
-        mainHtml += '<div class="grid">';
-        items.forEach(p => { mainHtml += renderCard(p, cfg.efectivo); });
-        mainHtml += '</div></section>';
+          '<span class="seccion-contador">' + items.length + ' productos</span></div>';
+        mainHtml += '<div class="tabla-wrap"><table><thead><tr><th>Producto</th><th class="col-precio">Precio</th></tr></thead><tbody>';
+        items.forEach(p => { mainHtml += renderFila(p, false); });
+        mainHtml += '</tbody></table></div></section>';
       });
 
       document.getElementById('navCategorias').innerHTML = navHtml;
@@ -650,10 +393,10 @@
         let algunaVisible = false;
         secciones.forEach(sec => {
           let visibles = 0;
-          sec.querySelectorAll('.card').forEach(card => {
-            const match = card.getAttribute('data-nombre').includes(q);
-            card.style.display = match ? '' : 'none';
-            if (match) { visibles++; card.classList.add('visible'); }
+          sec.querySelectorAll('tr.fila').forEach(fila => {
+            const match = fila.getAttribute('data-nombre').includes(q);
+            fila.style.display = match ? '' : 'none';
+            if (match) visibles++;
           });
           sec.style.display = visibles > 0 ? '' : 'none';
           if (visibles > 0) algunaVisible = true;
@@ -661,20 +404,16 @@
         vacio.style.display = algunaVisible ? 'none' : 'block';
         document.getElementById('navCategorias').style.display = q ? 'none' : 'flex';
       }
-
       input.addEventListener('input', filtrar);
       btnLimpiar.addEventListener('click', () => { input.value=''; filtrar(); input.focus(); });
     })
-    .catch(err => {
+    .catch(() => {
       document.getElementById('main').innerHTML = '';
       document.getElementById('errorCarga').style.display = 'block';
     });
 
-  // Boton volver arriba
   const btnArriba = document.getElementById('btnArriba');
-  window.addEventListener('scroll', () => {
-    btnArriba.classList.toggle('mostrar', window.scrollY > 500);
-  });
+  window.addEventListener('scroll', () => { btnArriba.classList.toggle('mostrar', window.scrollY > 500); });
   btnArriba.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
 </body>
