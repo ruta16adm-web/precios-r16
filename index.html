@@ -137,8 +137,7 @@
 
   /* ---------- MAIN: TABLA ---------- */
   main{ padding:20px 14px 10px; max-width:920px; margin:0 auto; }
-  .seccion{ margin-bottom:32px; scroll-margin-top:64px; opacity:0; transform:translateY(10px); transition:opacity 0.5s ease, transform 0.5s ease; }
-  .seccion.visible{ opacity:1; transform:translateY(0); }
+  .seccion{ margin-bottom:32px; scroll-margin-top:64px; }
   .seccion-header{ display:flex; align-items:baseline; gap:10px; border-bottom:3px solid var(--rojo); padding-bottom:8px; margin-bottom:10px; }
   .seccion-icono{ font-size:18px; }
   .seccion-titulo{ font-family:'Archivo Black', sans-serif; font-size:16px; color:var(--rojo); letter-spacing:0.3px; flex:1; }
@@ -188,9 +187,10 @@
 
   @media (max-width:480px){
     thead{ display:none; }
-    table, tbody, tr, td{ display:block; width:100%; }
-    tbody tr{ display:flex; justify-content:space-between; align-items:center; padding:11px 14px; gap:10px; }
-    td{ padding:0; }
+    table, tbody{ display:block; width:100%; }
+    tbody tr{ display:flex; justify-content:space-between; align-items:center; padding:11px 14px; gap:10px; width:100%; }
+    td{ display:block; padding:0; width:auto; }
+    td:first-child{ flex:1; min-width:0; }
     td.col-precio{ text-align:right; flex-shrink:0; }
     .logo{ font-size:19px; }
   }
@@ -283,13 +283,6 @@
     '</tr>';
   }
 
-  function activarRevelado() {
-    const obs = new IntersectionObserver((entradas) => {
-      entradas.forEach(entrada => { if (entrada.isIntersecting) { entrada.target.classList.add('visible'); obs.unobserve(entrada.target); } });
-    }, { threshold: 0.05 });
-    document.querySelectorAll('.seccion').forEach(s => obs.observe(s));
-  }
-
   function activarNavActiva() {
     const secciones = document.querySelectorAll('.seccion');
     const chips = document.querySelectorAll('.nav-chip');
@@ -378,7 +371,6 @@
       document.getElementById('main').innerHTML = mainHtml;
       document.getElementById('footer').textContent = totalProductos + ' productos · Actualizado: ' + new Date().toLocaleString('es-AR');
 
-      activarRevelado();
       activarNavActiva();
 
       const input = document.getElementById('buscador');
