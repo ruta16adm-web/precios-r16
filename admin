@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>R16 - Panel de Ofertas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rojo:#a3241f; --rojo-2:#7a1a17; --crudo:#f7f3ea; --crudo-2:#fffdf8;
+    --mostaza:#d99a1f; --tinta:#241414;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--crudo); color:var(--tinta); font-family:'Archivo',sans-serif; min-height:100vh; }
+  header{ background:linear-gradient(135deg, var(--rojo), var(--rojo-2)); color:#fff; padding:20px; text-align:center; }
+  header h1{ font-family:'Archivo Black',sans-serif; font-size:20px; margin:0; }
+  header p{ font-family:'Space Mono',monospace; font-size:11px; opacity:0.8; margin-top:4px; }
+  main{ max-width:520px; margin:0 auto; padding:24px 16px 60px; }
+
+  .caja{ background:var(--crudo-2); border:1px solid #e8e1d0; border-radius:14px; padding:20px; margin-bottom:18px; box-shadow:0 3px 10px rgba(0,0,0,0.05); }
+  label{ display:block; font-size:12.5px; font-weight:700; margin:14px 0 6px; color:#5a5248; }
+  label:first-child{ margin-top:0; }
+  input{
+    width:100%; padding:11px 13px; border-radius:8px; border:1.5px solid #e0d8c4;
+    font-family:'Archivo',sans-serif; font-size:15px; background:#fff; color:var(--tinta);
+  }
+  input:focus{ outline:none; border-color:var(--rojo); }
+  .fila-2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  button{
+    width:100%; padding:13px; border:none; border-radius:10px; margin-top:18px;
+    font-family:'Archivo Black',sans-serif; font-size:14px; letter-spacing:0.3px;
+    background:var(--rojo); color:#fff; cursor:pointer; transition:transform 0.15s ease, background 0.15s ease;
+  }
+  button:hover{ background:var(--rojo-2); }
+  button:active{ transform:scale(0.98); }
+  button.secundario{ background:#e4ddcb; color:var(--tinta); }
+  button.secundario:hover{ background:#d8cfb8; }
+  button.chico{ width:auto; padding:6px 12px; font-size:11px; margin-top:0; }
+
+  .mensaje{ text-align:center; font-family:'Space Mono',monospace; font-size:12.5px; margin-top:12px; display:none; padding:9px; border-radius:8px; }
+  .mensaje.ok{ background:#e3f3e9; color:#1f7a4d; display:block; }
+  .mensaje.error{ background:#fbe4e1; color:#a3241f; display:block; }
+
+  .item-oferta{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 0; border-bottom:1px solid #ece5d2; gap:10px;
+  }
+  .item-oferta:last-child{ border-bottom:none; }
+  .item-nombre{ font-weight:600; font-size:14px; }
+  .item-detalle{ font-family:'Space Mono',monospace; font-size:11px; color:#8a8478; margin-top:3px; }
+  .vacio-lista{ text-align:center; color:#a49c8b; font-family:'Space Mono',monospace; font-size:12px; padding:16px 0; }
+
+  #panelLogin, #panelAdmin{ display:none; }
+  #panelLogin.mostrar, #panelAdmin.mostrar{ display:block; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🔑 R16 · Panel de Ofertas Transitorias</h1>
+  <p>Solo uso interno</p>
+</header>
+<main>
+
+  <div class="caja" id="panelLogin">
+    <label>Contraseña</label>
+    <input type="password" id="inputPassword" placeholder="••••••••">
+    <button onclick="ingresar()">Ingresar</button>
+    <div class="mensaje" id="mensajeLogin"></div>
+  </div>
+
+  <div id="panelAdmin">
+    <div class="caja">
+      <strong>Cargar nueva oferta</strong>
+      <label>Producto</label>
+      <input type="text" id="fProducto" placeholder="Ej: Coca Cola 2.25L">
+      <label>Precio de lista</label>
+      <input type="number" id="fPrecio" placeholder="Ej: 2500">
+      <div class="fila-2">
+        <div>
+          <label>Cantidad (escalón 1)</label>
+          <input type="number" id="fCant1" placeholder="Ej: 4">
+        </div>
+        <div>
+          <label>Descuento % (escalón 1)</label>
+          <input type="number" id="fDesc1" placeholder="Ej: 10">
+        </div>
+      </div>
+      <div class="fila-2">
+        <div>
+          <label>Cantidad (escalón 2)</label>
+          <input type="number" id="fCant2" placeholder="Ej: 10 (opcional)">
+        </div>
+        <div>
+          <label>Descuento % (escalón 2)</label>
+          <input type="number" id="fDesc2" placeholder="Ej: 15 (opcional)">
+        </div>
+      </div>
+      <button onclick="guardarOferta()">Guardar oferta</button>
+      <div class="mensaje" id="mensajeForm"></div>
+    </div>
+
+    <div class="caja">
+      <strong>Ofertas cargadas</strong>
+      <div id="listaOfertas" style="margin-top:10px;"></div>
+    </div>
+
+    <button class="secundario" onclick="cerrarSesion()">Cerrar sesión</button>
+  </div>
+
+</main>
+
+<script>
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCsnb614ZfbL7_jzd7HfrAoSogBNaKz6_uidvdRm3mvx70bHQPNFrkrhx--Bao_V4O/exec';
+  let passwordActual = '';
+
+  function mostrarMensaje(id, texto, tipo) {
+    const el = document.getElementById(id);
+    el.textContent = texto;
+    el.className = 'mensaje ' + tipo;
+  }
+
+  function ingresar() {
+    const pass = document.getElementById('inputPassword').value.trim();
+    if (!pass) return;
+    fetch(APPS_SCRIPT_URL + '?accion=listarOfertas&password=' + encodeURIComponent(pass))
+      .then(r => r.json())
+      .then(res => {
+        if (res.ok) {
+          passwordActual = pass;
+          document.getElementById('panelLogin').classList.remove('mostrar');
+          document.getElementById('panelAdmin').classList.add('mostrar');
+          renderizarOfertas(res.ofertas);
+        } else {
+          mostrarMensaje('mensajeLogin', res.error || 'Contraseña incorrecta', 'error');
+        }
+      })
+      .catch(() => mostrarMensaje('mensajeLogin', 'Error de conexión, probá de nuevo', 'error'));
+  }
+
+  function cerrarSesion() {
+    passwordActual = '';
+    document.getElementById('panelAdmin').classList.remove('mostrar');
+    document.getElementById('panelLogin').classList.add('mostrar');
+    document.getElementById('inputPassword').value = '';
+  }
+
+  function renderizarOfertas(ofertas) {
+    const cont = document.getElementById('listaOfertas');
+    if (!ofertas || ofertas.length === 0) {
+      cont.innerHTML = '<div class="vacio-lista">Todavía no cargaste ninguna oferta.</div>';
+      return;
+    }
+    cont.innerHTML = ofertas.map(o => {
+      let detalle = '$' + Number(o.precioLista).toLocaleString('es-AR');
+      if (o.cant1) detalle += ' · Llevando ' + o.cant1 + ': ' + o.desc1 + '% off';
+      if (o.cant2) detalle += ' · Llevando ' + o.cant2 + ': ' + o.desc2 + '% off';
+      return '<div class="item-oferta">' +
+        '<div><div class="item-nombre">' + o.producto + '</div><div class="item-detalle">' + detalle + '</div></div>' +
+        '<button class="chico secundario" onclick="eliminarOferta(\'' + o.id + '\')">Eliminar</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  function guardarOferta() {
+    const producto = document.getElementById('fProducto').value.trim();
+    const precioLista = document.getElementById('fPrecio').value;
+    const cant1 = document.getElementById('fCant1').value;
+    const desc1 = document.getElementById('fDesc1').value;
+    const cant2 = document.getElementById('fCant2').value;
+    const desc2 = document.getElementById('fDesc2').value;
+
+    if (!producto || !precioLista) {
+      mostrarMensaje('mensajeForm', 'Completá al menos producto y precio', 'error');
+      return;
+    }
+
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ password: passwordActual, producto, precioLista, cant1, desc1, cant2, desc2 })
+    })
+      .then(r => r.json())
+      .then(res => {
+        if (res.ok) {
+          mostrarMensaje('mensajeForm', 'Oferta guardada ✔', 'ok');
+          ['fProducto','fPrecio','fCant1','fDesc1','fCant2','fDesc2'].forEach(id => document.getElementById(id).value = '');
+          fetch(APPS_SCRIPT_URL + '?accion=listarOfertas&password=' + encodeURIComponent(passwordActual))
+            .then(r => r.json()).then(res2 => renderizarOfertas(res2.ofertas));
+        } else {
+          mostrarMensaje('mensajeForm', res.error || 'No se pudo guardar', 'error');
+        }
+      })
+      .catch(() => mostrarMensaje('mensajeForm', 'Error de conexión, probá de nuevo', 'error'));
+  }
+
+  function eliminarOferta(id) {
+    if (!confirm('¿Eliminar esta oferta?')) return;
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ accion: 'eliminar', password: passwordActual, id })
+    })
+      .then(r => r.json())
+      .then(res => {
+        if (res.ok) {
+          fetch(APPS_SCRIPT_URL + '?accion=listarOfertas&password=' + encodeURIComponent(passwordActual))
+            .then(r => r.json()).then(res2 => renderizarOfertas(res2.ofertas));
+        } else {
+          alert(res.error || 'No se pudo eliminar');
+        }
+      });
+  }
+
+  document.getElementById('panelLogin').classList.add('mostrar');
+  document.getElementById('inputPassword').addEventListener('keydown', e => { if (e.key === 'Enter') ingresar(); });
+</script>
+</body>
+</html>
